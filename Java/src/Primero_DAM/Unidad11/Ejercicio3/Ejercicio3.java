@@ -13,7 +13,7 @@ public class Ejercicio3{
         };
 
         System.out.println("Muestro los socios antes de almacenarlos");
-        System.out.println(Arrays.deepToString(socios));
+        System.out.println(Arrays.toString(socios));
         System.out.println();
 
         //Escribimos
@@ -23,27 +23,22 @@ public class Ejercicio3{
             throw new RuntimeException(e);
         }
 
-        Socio[] nuevoSocio;
         System.out.println("Voy a recuperar los datos");
         System.out.println();
 
-
         //Leemos
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("Java\\src\\Primero_DAM\\Unidad11\\Ficheros\\socios.dat"))){
-            nuevoSocio = (Socio[]) in.readObject();
+            Socio[] nuevoSocio = (Socio[]) in.readObject();
             System.out.println("Recuperando...");
             System.out.println();
             System.out.println("Ya recuperé los datos, voy a mostrarlos");
-            System.out.println();
-            for (Socio socio : nuevoSocio) {
-                System.out.println(socio);
-            }
+            System.out.println(Arrays.toString(nuevoSocio));
+//            for (Socio socio : nuevoSocio) {
+//                System.out.println(socio);
+//            }
 
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-//        System.out.println("Ya recuperé los datos, voy a mostrarlos");
-//        System.out.println(Arrays.deepToString(nuevoSocio));
     }
 }
