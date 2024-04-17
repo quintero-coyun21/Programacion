@@ -1,19 +1,32 @@
 package Primero_DAM.Unidad12.Ejercicio12;
 
-import java.util.Date;
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Socio implements Comparable<Socio>{
-    String dni, nombre;
-    Date fechaAlta;
+public class Socio implements Serializable, Comparable<Socio>{
+    @Serial
+    private static final long serialVersionUID = 1L;
+    String dni, nombre, fechaAlta;
 
-    public Socio(String s, Date date) {
-    }
-
-    public Socio(String dni, String nombre, Date fechaAlta) {
+    public Socio(String dni, String nombre, String fechaAlta) {
         setDni(dni);
         setNombre(nombre);
         setFechaAlta(fechaAlta);
+    }
+
+    public LocalDate getFechaAltaAsLocalDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        return LocalDate.parse(fechaAlta, formatter);
+    }
+
+    public void setFechaAltaFromLocalDate(LocalDate fechaAlta) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+       setFechaAlta(fechaAlta.format(formatter));
     }
 
     public String getNombre() {
@@ -32,11 +45,11 @@ public class Socio implements Comparable<Socio>{
         this.dni = dni;
     }
 
-    public Date getFechaAlta() {
+    public String getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(Date fechaAlta) {
+    public void setFechaAlta(String fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
@@ -50,7 +63,7 @@ public class Socio implements Comparable<Socio>{
 
     @Override
     public String toString() {
-        return "\n Cliente " + "dni: " + getDni() + "nombre: " + getNombre() + ", fecha alta: " + getFechaAlta();
+        return "\n Cliente " + "dni: " + getDni() + ", nombre: " + getNombre() + ", fecha alta: " + getFechaAlta();
     }
 
     @Override
@@ -60,6 +73,22 @@ public class Socio implements Comparable<Socio>{
 
     @Override
     public int compareTo(Socio o) {
-        return getDni().compareTo(o.getDni());
+        int dniActual = Integer.parseInt(getDni());
+        int dniSocio = Integer.parseInt(o.getDni());
+        return Integer.compare(dniActual, dniSocio);
     }
+
+    static Comparator<Socio> compararAntiguedad = new Comparator<Socio>() {
+     @Override
+        public int compare(Socio o1, Socio o2) {
+         try {
+            LocalDate fechaAlta1 = LocalDate.parse(o1.getFechaAlta(), DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+            LocalDate fechaAlta2 = LocalDate.parse(o2.getFechaAlta(), DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+            return fechaAlta1.compareTo(fechaAlta2);
+         } catch (DateTimeParseException e) {
+            System.err.println("Error al analizar la fecha de alta: " + e.getMessage());
+            return 0; // Sin son iguales o no se pueda determinar
+         }
+        }
+     };
 }
