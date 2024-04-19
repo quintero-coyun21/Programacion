@@ -28,7 +28,9 @@ public class Ejercicio12mas1 {
 
 //        Set<E> intersec2 = new LinkedHashSet<>();
 //        for (E cont : conjunto1) {
-//            intersec2.add(cont);
+//            if (conjunto2.contains(cont)) {
+//                intersec2.add(cont);
+//            }
 //        }
         return intersec;
     }
