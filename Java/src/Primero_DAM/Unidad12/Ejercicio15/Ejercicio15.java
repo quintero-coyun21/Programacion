@@ -17,7 +17,7 @@ public class Ejercicio15 {
 //    static String fecha = localDate.format(formatter);
 //    static String ruta = "Java\\src\\Primero_DAM\\Unidad12\\Ejercicio15\\registros"+fecha+extension;
     //static final String ruta = "Java\\src\\Primero_DAM\\Unidad12\\Ejercicio15\\registros";
-    static Registro registros = new Registro();
+//    static Registro registros = new Registro();
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         cargarRegistros();
@@ -46,7 +46,7 @@ public class Ejercicio15 {
                     listarRegistros();
                     break;
                 case "c", "C":
-//                    modificarSocio();
+                    mostrarRegistros();
                     break;
                 case "d", "D":
                     guardarRegistro();

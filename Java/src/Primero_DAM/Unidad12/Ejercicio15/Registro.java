@@ -3,13 +3,11 @@ package Primero_DAM.Unidad12.Ejercicio15;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 
 public class Registro implements Serializable {
-
+//    @Serial
+//    private static final long serialVersionUID = 1L;
     static LocalDate localDate = LocalDate.now();
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
     static String extension = ".dat";
@@ -19,9 +17,25 @@ public class Registro implements Serializable {
     String temperatura;
 
     public Registro(String temperatura) {
+        setFecha(obtenerFecha());
         setTemperatura(temperatura);
+        setFecha(fecha);
     }
     public Registro() {}
+
+    static String obtenerFecha(){
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(formatter1);
+    }
+
+    public static String getFecha() {
+        return fecha;
+    }
+
+    public static void setFecha(String fecha) {
+        Registro.fecha = fecha;
+    }
 
     public String getTemperatura() {
         return temperatura;
@@ -33,7 +47,7 @@ public class Registro implements Serializable {
 
     @Override
     public String toString() {
-        return "Registro: " + "temperatura: " + temperatura;
+        return "Temperatura: " + temperatura + " ºC" + "\nFecha: " + obtenerFecha() + "\n";
     }
 
     static HashSet<Registro> registros = new HashSet<>();
@@ -68,22 +82,35 @@ public class Registro implements Serializable {
         }
     }
 
-    //    static Comparator<Socio> compararAntiguedad = new Comparator<Socio>() {
-//        @Override
-//        public int compare(Socio o1, Socio o2) {
-//            try {
-//                LocalDate fechaAlta1 = LocalDate.parse(o1.getFechaAlta(), DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-//                LocalDate fechaAlta2 = LocalDate.parse(o2.getFechaAlta(), DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-//                return fechaAlta1.compareTo(fechaAlta2);
-//            } catch (DateTimeParseException e) {
-//                System.err.println("Error al analizar la fecha de alta: " + e.getMessage());
-//                return 0; // Sin son iguales o no se pueda determinar
-//            }
-//        }
-//    };
-//
-//    @Override
-//    public int compareTo(Registro o) {
-//        return 0;
+    static void max(){
+        System.out.println("Valor máximo: ");
+        System.out.println(Collections.max(registros, new Comparator<Registro>() {
+
+            @Override
+            public int compare(Registro o1, Registro o2) {
+                return o1.getTemperatura().compareTo(o2.getTemperatura());
+            }
+        }));
+    }
+
+    static void min(){
+        System.out.println("Valor mínimo: ");
+        System.out.println(Collections.min(registros, new Comparator<Registro>() {
+
+            @Override
+            public int compare(Registro o1, Registro o2) {
+                return o1.getTemperatura().compareTo(o2.getTemperatura());
+            }
+        }));
+    }
+
+//    static void media(){
+//        System.out.println(Collections.);
 //    }
+
+    static void mostrarRegistros(){
+        System.out.println("Registros:");
+        max();
+        min();
+    }
 }
