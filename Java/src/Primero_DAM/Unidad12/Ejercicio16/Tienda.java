@@ -3,6 +3,7 @@ package Primero_DAM.Unidad12.Ejercicio16;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Tienda implements Serializable {
     private Map<String, Producto> inventario;
@@ -24,6 +25,7 @@ public class Tienda implements Serializable {
         inventario.put(producto.getCodigo(), producto);
         System.out.println("Producto: " + producto.getNombre() + " dado de alta");
     }
+
 
     public void darDeBaja(String codigo) {
         inventario.remove(codigo);
@@ -77,7 +79,15 @@ public class Tienda implements Serializable {
 //        }
 //    }
 
-    private void cargarDatos() {
+    public void cargarDatos() {
+        File archivo = new File("Java/src/Primero_DAM/Unidad12/Ejercicio16/datos.dat");
+
+        if (!archivo.exists()) {
+            System.out.println("El archivo datos.dat no existe. Se creará uno nuevo.");
+            inventario = new HashMap<>(); // Inicializar el inventario vacío
+            return; // Salir del método sin intentar cargar datos
+        }
+
         try (ObjectInputStream objectIn = new ObjectInputStream(new FileInputStream("Java\\\\src\\\\Primero_DAM\\\\Unidad12\\\\Ejercicio16\\\\datos.dat"))) {
             inventario = (Map<String, Producto>) objectIn.readObject();
         } catch (IOException | ClassNotFoundException e) {

@@ -6,9 +6,10 @@ import java.util.Scanner;
 import static Primero_DAM.Unidad12.Ejercicio15.Registro.*;
 
 public class Ejercicio16 {
+    static Tienda tienda = new Tienda();
     public static void main(String[] args) throws IOException, ClassNotFoundException {
+
         try {
-            Tienda tienda = new Tienda();
             Scanner scanner = new Scanner(System.in);
             String opcion;
             while (true) {
@@ -26,8 +27,8 @@ public class Ejercicio16 {
                 opcion = scanner.next();
                 scanner.nextLine();
 
-                switch (opcion) {
-                    case "a", "A":
+                switch (opcion.toLowerCase()) {
+                    case "a":
                         Scanner sc = new Scanner(System.in);
                         System.out.println("Código: ");
                         String codigo = sc.nextLine();
@@ -39,23 +40,23 @@ public class Ejercicio16 {
                         int stock = sc.nextInt();
                         tienda.darDeAlta(new Producto(codigo,nombre,descripcion,stock));
                         break;
-                    case "b", "B":
+                    case "b":
                         System.out.println("Introduce el código de producto: ");
                         String codigoProducto = scanner.nextLine();
                         tienda.darDeBaja(codigoProducto);
                         break;
-                    case "c", "C":
+                    case "c":
                         System.out.println("Introduce el código de producto: ");
                         String codigoProducto2 = scanner.nextLine();
                         System.out.println("Cantidad, si va a disminuir el stock inserte el valor en negativo: ");
                         int cantidad = scanner.nextInt();
                         tienda.actualizarStock(codigoProducto2,cantidad);
                         break;
-                    case "d", "D":
+                    case "d":
                         tienda.guardarDatos();
                         System.out.println("Saliendo del programa...");
                         return;
-                    case "e", "E":
+                    case "e":
                         tienda.mostrarProductos();
                         break;
                     default:

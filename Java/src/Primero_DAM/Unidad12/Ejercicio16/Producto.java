@@ -1,8 +1,11 @@
 package Primero_DAM.Unidad12.Ejercicio16;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Producto implements Serializable{
+    @Serial
+    private static final long serialVersionUID = 5264251283978845680L;
     private String codigo;
     private String nombre;
     private String descripcion;
@@ -13,6 +16,10 @@ public class Producto implements Serializable{
         setNombre(nombre);
         setDescripcion(descripcion);
         setStock(stock);
+    }
+
+    public Producto() {
+
     }
 
     public void actualizarStock(int cantidad) {
