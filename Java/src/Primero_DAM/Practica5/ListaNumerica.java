@@ -1,73 +1,243 @@
 package Primero_DAM.Practica5;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
-public class ListaNumerica implements OperacionesAvanzadas{
+public class ListaNumerica implements OperacionesAvanzadas {
+    private List<Double> lista;
 
-    List<Double> lista = new ArrayList<Double>();
-
-    public void generarLista(){}
-    public void agregarElementosLista(Double numero){
-        lista.add(numero);
+    public ListaNumerica(int N) {
+        lista = new ArrayList<>();
+        generarListaAleatoria(N);
     }
-    public void borrarElementosLista(Double numero){
-        lista.remove(numero);
-    }
-    public void ordenarListaAscendente(){}
-    public void ordenarListaDescendente(){}
-    public void mostrarListaElementos(){}
 
-    /* ---- */
+    private void generarListaAleatoria(int N) {
+        Random rand = new Random();
+        for (int i = 0; i < N; i++) {
+            lista.add(rand.nextDouble() * 10);
+        }
+
+    }
+
+    public void agregarElemento(double elemento) {
+        lista.add(elemento);
+    }
+
+    public void borrarElemento(double elemento) {
+        lista.remove(elemento);
+    }
+
+    public void mostrarLista() {
+        System.out.println(lista);
+    }
 
     @Override
-    public void contarPrimos() {
-
-    }
-
-    @Override
-    public void sumaDigitos() {
-
-    }
-
-    @Override
-    public void mediana() {
-
-    }
-
-    @Override
-    public void moda() {
-
-    }
-
-    /* ---- */
-
-    @Override
-    public double sumaElementos() {
-        Double suma = 0.0;
-        for (var numero : lista) {
-            suma += numero;
+    public double calcularSuma(List<Double> lista) {
+        double suma = 0;
+        for (double num : lista) {
+            suma += num;
         }
         return suma;
     }
 
     @Override
-    public void promedioElementos() {
-        int contador = 0;
-        for (var ignored : lista) {
-            contador++;
+    public double calcularPromedio(List<Double> lista) {
+        double suma = calcularSuma(lista);
+        return suma / lista.size();
+    }
+
+    @Override
+    public double encontrarMaximo(List<Double> lista) {
+        double maximo = Double.MIN_VALUE;
+        for (double num : lista) {
+            if (num > maximo) {
+                maximo = num;
+            }
         }
-        System.out.println(contador);
-        double promedio = sumaElementos() / lista.size();
-        System.out.println("El promedio de la lista es: " + promedio);
+        return maximo;
+    }
+
+//    @Override
+//    public double encontrarMaximo(List<Double> lista) {
+//        if (lista.isEmpty()) {
+//            throw new IllegalArgumentException("La lista está vacía");
+//        }
+//
+//        double maximo = lista.get(0);
+//
+//        for (int i = 1; i < lista.size(); i++) {
+//            double num = lista.get(i);
+//
+//            if (num > maximo) {
+//                maximo = num;
+//            }
+//        }
+//
+//        return maximo;
+//    }
+
+    @Override
+    public double encontrarMinimo(List<Double> lista) {
+        double minimo = Double.MAX_VALUE;
+        for (double num : lista) {
+            if (num < minimo) {
+                minimo = num;
+            }
+        }
+        return minimo;
     }
 
     @Override
-    public void maxElemento() {
+    public int calcularCantidadPrimos(List<Double> lista) {
+        int count = 0;
+        for (double num : lista) {
+            if (esPrimo((int) num)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private boolean esPrimo(int num) {
+        if (num <= 1) {
+            return false;
+        }
+        // Divide hasta la raíz cuadrada del número dado, con que salga 0 en alguna division de los valores entre 2 y la raíz, automáticamente devuelve false, ya que habría otro divisor además de 1 y el propio número
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
-    public void minElemento() {
+    public int calcularSumaDigitos(List<Double> lista) {
+        int sumaDigitos = 0;
+        for (double num : lista) {
+            int numeroEntero = (int) num;
+            while (numeroEntero != 0) {
+                sumaDigitos += numeroEntero % 10;
+                numeroEntero /= 10;
+            }
+        }
+        return sumaDigitos;
+    }
 
+    @Override
+    public double calcularMediana(List<Double> lista) {
+        lista.sort(null);
+        int tamanio = lista.size();
+        if (tamanio % 2 == 0) {
+            return (lista.get(tamanio / 2 - 1) + lista.get(tamanio / 2)) / 2.0;
+        } else {
+            return lista.get(tamanio / 2);
+        }
+    }
+
+//    @Override
+//    public double calcularModa(List<Double> lista) {
+//        int maxCount = 0;
+//        double moda = -1;
+//        for (double num : lista) {
+//            int count = 0;
+//            for (double elemento : lista) {
+//                if (elemento == num) {
+//                    count++;
+//                }
+//            }
+//            if (count > maxCount) {
+//                maxCount = count;
+//                moda = num;
+//            }
+//        }
+//        return moda;
+//    }
+
+    @Override
+    public double calcularModa(List<Double> lista) {
+        Map<Integer, Integer> conteo = new HashMap<>();
+
+        int maxCount = 0;
+        double moda = -1;
+
+        for (double num : lista) {
+            int numEntero = (int) num;
+            int count = conteo.getOrDefault(numEntero, 0) + 1;
+            conteo.put(numEntero, count);
+
+            if (count >= maxCount) {
+                maxCount = count;
+                moda = numEntero;
+            }
+        }
+
+        if (maxCount > 1) {
+            return moda;
+        } else {
+            return -1;
+        }
+    }
+
+//    @Override
+//    public double calcularModa(List<Double> lista) {
+//        Map<Integer, Integer> conteo = new HashMap<>();
+//
+//        int maxCount = 0;
+//        double moda = -1;
+//
+//        for (double num : lista) {
+//            int numEntero = (int) num;
+//
+//            // Verificamos si el número ya existe en el HashMap
+//            if (conteo.containsKey(numEntero)) {
+//                int count = conteo.get(numEntero) + 1;
+//                conteo.put(numEntero, count);
+//
+//                if (count > maxCount) {
+//                    maxCount = count;
+//                    moda = numEntero;
+//                }
+//            } else {
+//                conteo.put(numEntero, 1);
+//            }
+//        }
+//
+//        if (maxCount > 1) {
+//            return moda;
+//        } else {
+//            return -1;
+//        }
+//    }
+
+
+
+    void guardarListaEnArchivo() {
+        //LocalTime horaActual = LocalTime.now();
+        //DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HHmm");
+        //String horaFormateada = horaActual.format(formatoHora);
+        String horaFormateada = LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm"));
+
+        try (FileWriter fileWriter = new FileWriter("Java/src/Primero_DAM/Practica5/listas" + horaFormateada + ".txt");
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
+            for (double elemento : lista) {
+                printWriter.println(elemento);
+            }
+            System.out.println("Lista guardada en archivo correctamente.");
+        } catch (IOException e) {
+            System.out.println("Error al guardar la lista en archivo: " + e.getMessage());
+        }
+    }
+
+    public List<Double> getLista() {
+        return lista;
+    }
+
+    public void setLista(List<Double> lista) {
+        this.lista = lista;
     }
 }
