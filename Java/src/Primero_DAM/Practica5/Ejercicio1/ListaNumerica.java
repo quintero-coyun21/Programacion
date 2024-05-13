@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class ListaNumerica implements OperacionesAvanzadas {
@@ -18,7 +19,7 @@ public class ListaNumerica implements OperacionesAvanzadas {
     private void generarListaAleatoria(int N) {
         Random rand = new Random();
         for (int i = 0; i < N; i++) {
-            lista.add(rand.nextDouble() * 100);
+            lista.add(rand.nextDouble(10));
         }
 
     }
@@ -46,8 +47,7 @@ public class ListaNumerica implements OperacionesAvanzadas {
 
     @Override
     public double calcularPromedio(List<Double> lista) {
-        double suma = calcularSuma(lista);
-        return suma / lista.size();
+        return calcularSuma(lista) / lista.size();
     }
 
     @Override
@@ -217,7 +217,8 @@ public class ListaNumerica implements OperacionesAvanzadas {
         //LocalTime horaActual = LocalTime.now();
         //DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HHmm");
         //String horaFormateada = horaActual.format(formatoHora);
-        String horaFormateada = LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm"));
+        //String horaFormateada = LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm"));
+        String horaFormateada = String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES));
 
         try (FileWriter fileWriter = new FileWriter("Java/src/Primero_DAM/Practica5/Ejercicio1/listas" + horaFormateada + ".txt");
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
