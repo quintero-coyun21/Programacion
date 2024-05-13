@@ -1,4 +1,4 @@
-package Primero_DAM.Practica5;
+package Primero_DAM.Practica5.Ejercicio1;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class ListaNumerica implements OperacionesAvanzadas {
     private void generarListaAleatoria(int N) {
         Random rand = new Random();
         for (int i = 0; i < N; i++) {
-            lista.add(rand.nextDouble() * 10);
+            lista.add(rand.nextDouble() * 100);
         }
 
     }
@@ -193,7 +193,6 @@ public class ListaNumerica implements OperacionesAvanzadas {
 //        for (double num : lista) {
 //            int numEntero = (int) num;
 //
-//            // Verificamos si el número ya existe en el HashMap
 //            if (conteo.containsKey(numEntero)) {
 //                int count = conteo.get(numEntero) + 1;
 //                conteo.put(numEntero, count);
@@ -214,15 +213,13 @@ public class ListaNumerica implements OperacionesAvanzadas {
 //        }
 //    }
 
-
-
     void guardarListaEnArchivo() {
         //LocalTime horaActual = LocalTime.now();
         //DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HHmm");
         //String horaFormateada = horaActual.format(formatoHora);
         String horaFormateada = LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm"));
 
-        try (FileWriter fileWriter = new FileWriter("Java/src/Primero_DAM/Practica5/listas" + horaFormateada + ".txt");
+        try (FileWriter fileWriter = new FileWriter("Java/src/Primero_DAM/Practica5/Ejercicio1/listas" + horaFormateada + ".txt");
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
             for (double elemento : lista) {
                 printWriter.println(elemento);

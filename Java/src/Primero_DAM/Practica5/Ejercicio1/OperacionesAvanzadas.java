@@ -1,4 +1,4 @@
-package Primero_DAM.Practica5;
+package Primero_DAM.Practica5.Ejercicio1;
 
 import java.util.List;
 
