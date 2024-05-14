@@ -21,7 +21,6 @@ public class ListaNumerica implements OperacionesAvanzadas {
         for (int i = 0; i < N; i++) {
             lista.add(rand.nextDouble(10));
         }
-
     }
 
     public void agregarElemento(double elemento) {
@@ -76,7 +75,6 @@ public class ListaNumerica implements OperacionesAvanzadas {
 //                maximo = num;
 //            }
 //        }
-//
 //        return maximo;
 //    }
 
@@ -158,67 +156,47 @@ public class ListaNumerica implements OperacionesAvanzadas {
 //        return moda;
 //    }
 
-    @Override
-    public double calcularModa(List<Double> lista) {
-        Map<Integer, Integer> conteo = new HashMap<>();
+    public double calcularModa(List<Double> datos) {
+        Map<Double, Integer> conteo = new HashMap<>();
 
-        int maxCount = 0;
-        double moda = -1;
+        for (double dato : datos) {
+            conteo.put(dato, conteo.getOrDefault(dato, 0) + 1);
+        }
 
-        for (double num : lista) {
-            int numEntero = (int) num;
-            int count = conteo.getOrDefault(numEntero, 0) + 1;
-            conteo.put(numEntero, count);
-
-            if (count >= maxCount) {
-                maxCount = count;
-                moda = numEntero;
+        int moda = 0;
+        int maxFrecuencia = 0;
+        for (Map.Entry<Double, Integer> entry : conteo.entrySet()) {
+            int frecuencia = entry.getValue();
+            if (frecuencia > maxFrecuencia) {
+                maxFrecuencia = frecuencia;
+                moda = entry.getKey().intValue();
             }
         }
-
-        if (maxCount > 1) {
-            return moda;
-        } else {
-            return -1;
-        }
+        return moda;
     }
 
-//    @Override
-//    public double calcularModa(List<Double> lista) {
-//        Map<Integer, Integer> conteo = new HashMap<>();
+//    public double calcularModa(List<Double> datos) {
+//        Map<Double, Integer> conteo = new HashMap<>();
 //
-//        int maxCount = 0;
+//        for (double dato : datos) {
+//            conteo.put(dato, conteo.getOrDefault(dato, 0) + 1); // aumenta el conteo y si el número no está lo inicializa en 1 y si ya está suma 1
+//        }
+//
 //        double moda = -1;
-//
-//        for (double num : lista) {
-//            int numEntero = (int) num;
-//
-//            if (conteo.containsKey(numEntero)) {
-//                int count = conteo.get(numEntero) + 1;
-//                conteo.put(numEntero, count);
-//
-//                if (count > maxCount) {
-//                    maxCount = count;
-//                    moda = numEntero;
-//                }
-//            } else {
-//                conteo.put(numEntero, 1);
+//        int maxFrecuencia = 0;
+//        for (Map.Entry<Double, Integer> entry : conteo.entrySet()) {
+//            int frecuencia = entry.getValue();
+//            if (frecuencia > maxFrecuencia) {
+//                maxFrecuencia = frecuencia;
+//                moda = entry.getKey();
 //            }
 //        }
-//
-//        if (maxCount > 1) {
-//            return moda;
-//        } else {
-//            return -1;
-//        }
+//        return moda;
 //    }
 
     void guardarListaEnArchivo() {
-        //LocalTime horaActual = LocalTime.now();
-        //DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HHmm");
-        //String horaFormateada = horaActual.format(formatoHora);
-        //String horaFormateada = LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm"));
-        String horaFormateada = String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES));
+        String horaFormateada = LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm"));
+        //String horaFormateada = String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)).replace(":", "");
 
         try (FileWriter fileWriter = new FileWriter("Java/src/Primero_DAM/Practica5/Ejercicio1/listas" + horaFormateada + ".txt");
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
