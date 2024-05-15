@@ -51,6 +51,9 @@ public class ListaNumerica implements OperacionesAvanzadas {
 
     @Override
     public double encontrarMaximo(List<Double> lista) {
+        if (lista.isEmpty()) {
+            throw new IllegalArgumentException("La lista está vacía");
+        }
         double maximo = Double.MIN_VALUE;
         for (double num : lista) {
             if (num > maximo) {
@@ -60,26 +63,11 @@ public class ListaNumerica implements OperacionesAvanzadas {
         return maximo;
     }
 
-//    @Override
-//    public double encontrarMaximo(List<Double> lista) {
-//        if (lista.isEmpty()) {
-//            throw new IllegalArgumentException("La lista está vacía");
-//        }
-//
-//        double maximo = lista.get(0);
-//
-//        for (int i = 1; i < lista.size(); i++) {
-//            double num = lista.get(i);
-//
-//            if (num > maximo) {
-//                maximo = num;
-//            }
-//        }
-//        return maximo;
-//    }
-
     @Override
     public double encontrarMinimo(List<Double> lista) {
+        if (lista.isEmpty()) {
+            throw new IllegalArgumentException("La lista está vacía");
+        }
         double minimo = Double.MAX_VALUE;
         for (double num : lista) {
             if (num < minimo) {
@@ -160,10 +148,10 @@ public class ListaNumerica implements OperacionesAvanzadas {
         Map<Double, Integer> conteo = new HashMap<>();
 
         for (double dato : datos) {
-            conteo.put(dato, conteo.getOrDefault(dato, 0) + 1);
+            conteo.put(dato, conteo.getOrDefault(dato, 0) + 1);// aumenta el conteo y si el número no está lo inicializa en 1 y si ya está suma 1
         }
 
-        int moda = 0;
+        int moda = -1;
         int maxFrecuencia = 0;
         for (Map.Entry<Double, Integer> entry : conteo.entrySet()) {
             int frecuencia = entry.getValue();
@@ -174,25 +162,6 @@ public class ListaNumerica implements OperacionesAvanzadas {
         }
         return moda;
     }
-
-//    public double calcularModa(List<Double> datos) {
-//        Map<Double, Integer> conteo = new HashMap<>();
-//
-//        for (double dato : datos) {
-//            conteo.put(dato, conteo.getOrDefault(dato, 0) + 1); // aumenta el conteo y si el número no está lo inicializa en 1 y si ya está suma 1
-//        }
-//
-//        double moda = -1;
-//        int maxFrecuencia = 0;
-//        for (Map.Entry<Double, Integer> entry : conteo.entrySet()) {
-//            int frecuencia = entry.getValue();
-//            if (frecuencia > maxFrecuencia) {
-//                maxFrecuencia = frecuencia;
-//                moda = entry.getKey();
-//            }
-//        }
-//        return moda;
-//    }
 
     void guardarListaEnArchivo() {
         String horaFormateada = LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm"));
