@@ -5,30 +5,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class ListaNumerica implements OperacionesAvanzadas {
     private List<Double> lista;
 
-    public ListaNumerica(int N) {
+    public ListaNumerica(int numero) {
         lista = new ArrayList<>();
-        generarListaAleatoria(N);
+        generarListaAleatoria(numero);
     }
 
-    private void generarListaAleatoria(int N) {
+    private void generarListaAleatoria(int numero) {
         Random rand = new Random();
-        for (int i = 0; i < N; i++) {
-            lista.add(rand.nextDouble(10));
+        for (int i = 0; i < numero; i++) {
+            lista.add(rand.nextDouble(100));
         }
-    }
-
-    public void agregarElemento(double elemento) {
-        lista.add(elemento);
-    }
-
-    public void borrarElemento(double elemento) {
-        lista.remove(elemento);
     }
 
     public void mostrarLista() {
@@ -51,30 +42,12 @@ public class ListaNumerica implements OperacionesAvanzadas {
 
     @Override
     public double encontrarMaximo(List<Double> lista) {
-        if (lista.isEmpty()) {
-            throw new IllegalArgumentException("La lista está vacía");
-        }
-        double maximo = Double.MIN_VALUE;
-        for (double num : lista) {
-            if (num > maximo) {
-                maximo = num;
-            }
-        }
-        return maximo;
+        return Collections.max(lista);
     }
 
     @Override
     public double encontrarMinimo(List<Double> lista) {
-        if (lista.isEmpty()) {
-            throw new IllegalArgumentException("La lista está vacía");
-        }
-        double minimo = Double.MAX_VALUE;
-        for (double num : lista) {
-            if (num < minimo) {
-                minimo = num;
-            }
-        }
-        return minimo;
+        return Collections.min(lista);
     }
 
     @Override
@@ -92,7 +65,7 @@ public class ListaNumerica implements OperacionesAvanzadas {
         if (num <= 1) {
             return false;
         }
-        // Divide hasta la raíz cuadrada del número dado, con que salga 0 en alguna division de los valores entre 2 y la raíz, automáticamente devuelve false, ya que habría otro divisor además de 1 y el propio número
+
         for (int i = 2; i <= Math.sqrt(num); i++) {
             if (num % i == 0) {
                 return false;
@@ -125,30 +98,11 @@ public class ListaNumerica implements OperacionesAvanzadas {
         }
     }
 
-//    @Override
-//    public double calcularModa(List<Double> lista) {
-//        int maxCount = 0;
-//        double moda = -1;
-//        for (double num : lista) {
-//            int count = 0;
-//            for (double elemento : lista) {
-//                if (elemento == num) {
-//                    count++;
-//                }
-//            }
-//            if (count > maxCount) {
-//                maxCount = count;
-//                moda = num;
-//            }
-//        }
-//        return moda;
-//    }
-
     public double calcularModa(List<Double> datos) {
         Map<Double, Integer> conteo = new HashMap<>();
 
         for (double dato : datos) {
-            conteo.put(dato, conteo.getOrDefault(dato, 0) + 1);// aumenta el conteo y si el número no está lo inicializa en 1 y si ya está suma 1
+            conteo.put(dato, conteo.getOrDefault(dato, 0) + 1);
         }
 
         int moda = -1;
@@ -165,7 +119,6 @@ public class ListaNumerica implements OperacionesAvanzadas {
 
     void guardarListaEnArchivo() {
         String horaFormateada = LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm"));
-        //String horaFormateada = String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)).replace(":", "");
 
         try (FileWriter fileWriter = new FileWriter("Java/src/Primero_DAM/Practica5/Ejercicio1/listas" + horaFormateada + ".txt");
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
@@ -182,7 +135,4 @@ public class ListaNumerica implements OperacionesAvanzadas {
         return lista;
     }
 
-    public void setLista(List<Double> lista) {
-        this.lista = lista;
-    }
 }

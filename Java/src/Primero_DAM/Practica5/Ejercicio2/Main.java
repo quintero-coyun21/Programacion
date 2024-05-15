@@ -11,16 +11,12 @@ public class Main {
 
         do {
             try {
-                System.out.println("""
+                System.out.printf("""
                         
                         ╔═════════════════════════ Menú Aldea ═════════════════════════╗
-                        ║""" + ConsoleColors.green(" 1. Agregar habitante") + """ 
-                                                                 ║
-                        ║""" + ConsoleColors.red(" 2. Eliminar habitante")  + """ 
-                                                                ║
-                        ║""" + ConsoleColors.red(" 2. Eliminar habitante")  + """
-                                                                ║
-                        ║ 3. Ordenar lista de habitantes                               ║
+                        ║%1$s 1. Agregar habitante %4$s                                        ║
+                        ║%2$s 2. Eliminar habitante %4$s                                       ║
+                        ║%3$s 3. Ordenar lista de habitantes   %4$s                            ║
                         ║ 4. Buscar habitante por nombre                               ║
                         ║ 5. Buscar habitante por profesión                            ║
                         ║ 6. Mostrar lista de habitantes                               ║
@@ -29,7 +25,7 @@ public class Main {
                         ╠══════════════════════════════════════════════════════════════╣
                         ║ Seleccione una opción del programa                           ║
                         ╚══════════════════════════════════════════════════════════════╝
-                        """);
+                        """ , ConsoleColors.GREEN, ConsoleColors.RED, ConsoleColors.BLACK,ConsoleColors.RESET);
                 opcion = scanner.nextInt();
 
                 switch (opcion) {

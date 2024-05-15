@@ -1,23 +1,29 @@
 package Primero_DAM.Practica5.Ejercicio1;
 
+import Primero_DAM.Practica5.Ejercicio2.ConsoleColors;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        ListaNumerica listaNumerica = new ListaNumerica(10);
+        ListaNumerica listaNumerica = new ListaNumerica(11);
 
         Scanner scanner = new Scanner(System.in);
 
         boolean salir = false;
         while (!salir) {
-            System.out.println("\n--- Menú ---");
-            System.out.println("1. Mostrar lista");
-            System.out.println("2. Realizar operaciones básicas");
-            System.out.println("3. Realizar operaciones avanzadas");
-            System.out.println("4. Guardar lista en archivo");
-            System.out.println("5. Salir");
-
-            System.out.print("Ingrese una opción: ");
+            System.out.print("""
+                        
+                        ╔═════════════════  Menú  ═════════════════╗
+                        ║ 1. Mostrar lista                         ║
+                        ║ 2. Realizar operaciones básicas          ║
+                        ║ 3. Realizar operaciones avanzadas        ║
+                        ║ 4. Guardar lista en archivo              ║
+                        ║ 0. Salir                                 ║
+                        ╠══════════════════════════════════════════╣
+                        ║ Seleccione una opción del programa       ║
+                        ╚══════════════════════════════════════════╝
+                        """);
             int opcion = scanner.nextInt();
 
             switch (opcion) {
@@ -62,7 +68,6 @@ public class Main {
     private static void guardarListaEnArchivo(ListaNumerica listaNumerica) {
         listaNumerica.guardarListaEnArchivo();
     }
-//asddsad
 }
 
 
