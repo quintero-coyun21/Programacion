@@ -11,12 +11,12 @@ public class Main {
 
         do {
             try {
-                System.out.printf("""
+                System.out.print("""
                         
                         ╔═════════════════════════ Menú Aldea ═════════════════════════╗
-                        ║%1$s 1. Agregar habitante %4$s                                        ║
-                        ║%2$s 2. Eliminar habitante %4$s                                       ║
-                        ║%3$s 3. Ordenar lista de habitantes   %4$s                            ║
+                        ║ 1. Agregar habitante                                         ║
+                        ║ 2. Eliminar habitante                                        ║
+                        ║ 3. Ordenar lista de habitantes                               ║
                         ║ 4. Buscar habitante por nombre                               ║
                         ║ 5. Buscar habitante por profesión                            ║
                         ║ 6. Mostrar lista de habitantes                               ║
@@ -25,7 +25,7 @@ public class Main {
                         ╠══════════════════════════════════════════════════════════════╣
                         ║ Seleccione una opción del programa                           ║
                         ╚══════════════════════════════════════════════════════════════╝
-                        """ , ConsoleColors.GREEN, ConsoleColors.RED, ConsoleColors.BLACK,ConsoleColors.RESET);
+                        """);
                 opcion = scanner.nextInt();
 
                 switch (opcion) {
@@ -44,7 +44,17 @@ public class Main {
                         aldea.eliminarHabitante(nombreEliminar);
                         break;
                     case 3:
-                        System.out.print("Ingrese el método de ordenación (0-3): ");
+                        System.out.print("""
+                        
+                        ╔═══════════════ Ordenación Aldea ══════════════════╗
+                        ║ 0. Ordenar por clave                              ║
+                        ║ 1. Ordenar por nombre                             ║
+                        ║ 2. Ordenar por profesión                          ║
+                        ║ 3. Ordenar por romanos derrotados                 ║
+                        ╠═══════════════════════════════════════════════════╣
+                        ║ Seleccione una opción del programa                ║
+                        ╚═══════════════════════════════════════════════════╝
+                        """);
                         int metodoOrdenacion = scanner.nextInt();
                         aldea.ordenarLista(metodoOrdenacion);
                         break;

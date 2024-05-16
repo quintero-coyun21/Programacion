@@ -31,14 +31,16 @@ public class Aldea {
         switch (metodoDeOrdenacion) {
             case 0:
                 // No es necesario hacer nada, ya que el mapa se almacena internamente por clave
+                System.out.println("Lista de Habitantes ordenada por clave");
                 break;
-            case 1: // Ordenar por nombre
+            case 1:
                 lista.sort(new Comparator<Map.Entry<Integer, Aldeano>>() {
                     @Override
                     public int compare(Map.Entry<Integer, Aldeano> entry1, Map.Entry<Integer, Aldeano> entry2) {
                         return entry1.getValue().getNombre().compareTo(entry2.getValue().getNombre());
                     }
                 });
+                System.out.println("Lista de Habitantes ordenada por nombre");
                 break;
             case 2:
                 lista.sort(new Comparator<Map.Entry<Integer, Aldeano>>() {
@@ -47,6 +49,7 @@ public class Aldea {
                         return entry1.getValue().getProfesion().compareTo(entry2.getValue().getProfesion());
                     }
                 });
+                System.out.println("Lista de Habitantes ordenada por profesión");
                 break;
             case 3:
                 lista.sort(new Comparator<Map.Entry<Integer, Aldeano>>() {
@@ -55,6 +58,7 @@ public class Aldea {
                         return Integer.compare(entry1.getValue().getRomanosDerrotados(), entry2.getValue().getRomanosDerrotados());
                     }
                 });
+                System.out.println("Lista de Habitantes ordenada por romanos derrotados");
                 break;
             default:
                 System.out.println("Método de ordenación no válido.");

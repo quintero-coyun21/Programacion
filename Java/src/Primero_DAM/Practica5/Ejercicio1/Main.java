@@ -1,7 +1,5 @@
 package Primero_DAM.Practica5.Ejercicio1;
 
-import Primero_DAM.Practica5.Ejercicio2.ConsoleColors;
-
 import java.util.Scanner;
 
 public class Main {
@@ -39,7 +37,7 @@ public class Main {
                 case 4:
                     guardarListaEnArchivo(listaNumerica);
                     break;
-                case 5:
+                case 0:
                     salir = true;
                     break;
                 default:
