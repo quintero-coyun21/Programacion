@@ -17,12 +17,20 @@ public class Main {
                 """);
         int opcion = sc.nextInt();
         switch (opcion) {
-            case 1: obtenerAlumnos();
-            case 2: obtenerMatriculas();
-            case 3: insertarAlumnos();
+            case 1:
+                obtenerAlumnos();
+                return;
+            case 2:
+                obtenerMatriculas();
+                return;
+            case 3:
+                insertarAlumnos();
+                return;
+            default:
+                System.out.println("Opcion no valida");
         }
-        System.out.println();
-        obtenerAsignaturas();
+//        System.out.println();
+//        obtenerAsignaturas();
     }
 
     public static void establecerConexion() {
@@ -59,15 +67,21 @@ public class Main {
     public static void obtenerMatriculas() throws SQLException {
         System.out.println("Introduce el id del alumno:");
         int idAlumnoP = new Scanner(System.in).nextInt();
-        String sql = "select alumno.idAlumno, alumno.nombre, asignatura.idAsignatura, asignatura.nombre from alumno join asignatura where alumno.idAlumno = " + idAlumnoP;
-        ResultSet rs = stmt.executeQuery(sql);
-        while (rs.next()) {
-            System.out.println("""
-                    \nNombre alumno:"""+ " " + rs.getString("nombre") + """
-                    \nNombre asignatura:"""+" " + rs.getString("nombre") + """
-                    """);
+        String sql = "select alumno.idAlumno, alumno.nombre, c.idAsignatura, c.nota from instituto.alumno a "+"inner join instituto.matriculas c on c.idAlumno = a.idAlumno"+"where a.idAlumno="+idAlumnoP;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idAlum = rs.getInt("idAlumno");//1
+                String nombre = rs.getString("nombre");//2
+                int idAsig = rs.getInt("curso");//3
+                double nota = rs.getDouble("nota");//4
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        // mostrar nombre alumno y asignatura y la nota media
+
     }
 
     public static void insertarAlumnos() throws SQLException {
@@ -81,6 +95,6 @@ public class Main {
         apellido2 = sc.nextLine();
 
         String sql = "insert into alumno(nombre,apellido1,apellido2) " + "values('" + nombre + "','" + apellido1 + "','" + apellido2 + "')";
-        stmt.executeUpdate(sql);
+        stmt.execute(sql);
     }
 }
