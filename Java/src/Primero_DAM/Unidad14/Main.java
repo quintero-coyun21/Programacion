@@ -26,8 +26,11 @@ public class Main {
             case 3:
                 insertarAlumnos();
                 return;
+            case 4:
+                actualizarNota();
+                return;
             default:
-                System.out.println("Opcion no valida");
+                System.out.println("Opción no valida");
         }
 //        System.out.println();
 //        obtenerAsignaturas();
@@ -82,6 +85,18 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static void actualizarNota() throws SQLException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Introduce el id del alumno:");
+        int idAlumnoP = sc.nextInt();
+        System.out.println("Introduce el id la asignatura:");
+        int idAsig = sc.nextInt();
+        System.out.println("Introduce la nota:");
+        double nota = sc.nextDouble();
+        String sql = "update alumno-asignatura set nota =" + nota + "where idAlumno ="+ idAlumnoP + "and idAsignatura="+idAsig;
+        stmt.execute(sql);
     }
 
     public static void insertarAlumnos() throws SQLException {
