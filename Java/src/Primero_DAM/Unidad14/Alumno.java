@@ -13,15 +13,6 @@ public class Alumno {
         setApellido2(apellido2);
     }
 
-
-
-
-
-
-
-
-    //Getters y Setters
-
     public int getIdAlumno() {
         return idAlumno;
     }
